@@ -44,6 +44,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
+                    <finalName>scraper</finalName>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>

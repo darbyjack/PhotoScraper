@@ -1,8 +1,6 @@
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.io.File;
-import java.net.URISyntaxException;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 /**
  * Created by GlareMasters
@@ -11,15 +9,19 @@ import java.net.URISyntaxException;
  */
 public class PhotoScraper {
 
-    private static File file = new File("src/main/resources/chromedriver.exe");
-    private static String absolutePath = file.getAbsolutePath();
 
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+        ChromeOptions options = new ChromeOptions();
 
-    public static void main(String[] args) throws URISyntaxException {
-        System.setProperty("webdriver.chrome.driver", absolutePath);
+        String url = args[0];
+        String memberCount = args[1];
 
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://google.com");
+        WebDriver driver = new ChromeDriver(options);
+        driver.get(url.replace("{}", String.valueOf(1)));
+        System.out.println(url);
+        System.out.println(memberCount);
+        driver.close();
     }
 
 
