@@ -38,6 +38,7 @@ public class PhotoScraper {
         File dir = new File(rootDomain);
         dir.mkdir();
 
+
         WebDriver driver = new ChromeDriver(options);
         WebDriverWait wait = new WebDriverWait(driver, 1);
         for (int i = 1; i < Integer.valueOf(memberCount); i++) {
@@ -48,14 +49,16 @@ public class PhotoScraper {
 
                 if (img.isDisplayed()) {
                     URL imgURL = new URL(img.getAttribute("src"));
-                    ReadableByteChannel readableByteChannel = Channels.newChannel(imgURL.openStream());
-                    FileOutputStream fileOutputStream = new FileOutputStream(dir + "/" + i + ".jpg");
-                    fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+                    if (!imgURL.toString().contains("gravatar") && !imgURL.toString().contains("avatar_male_l")) {
+                        ReadableByteChannel readableByteChannel = Channels.newChannel(imgURL.openStream());
+                        FileOutputStream fileOutputStream = new FileOutputStream(dir + "/" + i + ".jpg");
+                        fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+                    }
                 }
+
             } catch (NoSuchElementException e) {
                 continue;
             }
-
         }
 
         driver.close();
